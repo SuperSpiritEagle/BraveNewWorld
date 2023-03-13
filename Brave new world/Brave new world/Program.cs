@@ -58,6 +58,7 @@ namespace Brave_new_world
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
+
         private static char[,] ReadMap(out int playerPositionX, out int playerPositionY, out int allPoints,char player)
         {
             char symbol = ' ';
