@@ -19,8 +19,8 @@ namespace Brave_new_world
 
             Console.CursorVisible = false;
 
-            map = ReadMap(out playerPositionY, out playerPositionX, out allPoints,player);
-            
+            map = ReadMap(out playerPositionY, out playerPositionX, out allPoints, player);
+
             DrawMap(map);
 
             Console.SetCursorPosition(playerPositionY, playerPositionX);
@@ -28,22 +28,22 @@ namespace Brave_new_world
 
             while (isPlayng)
             {
-                ConsoleUI(collect, allPoints);
+                ConsolUserInterface(collect, allPoints);
 
-                Move(map, ref playerPositionX, ref playerPositionY, directionX, directionY,player);
+                Move(map, ref playerPositionX, ref playerPositionY, directionX, directionY, player);
 
-                collectingPoints(map, playerPositionX, playerPositionY, ref collect);
+                CollecPoint(map, playerPositionX, playerPositionY, ref collect);
 
                 if (collect == allPoints)
                 {
                     isPlayng = false;
                 }
 
-                ConsoleUI(collect, allPoints);  
+                ConsolUserInterface(collect, allPoints);
             }
         }
 
-        private static void ConsoleUI(int collectPoints,int allPoints)
+        private static void ConsolUserInterface(int collectPoints, int allPoints)
         {
             int positionY = 15;
 
@@ -59,15 +59,15 @@ namespace Brave_new_world
             }
         }
 
-        private static char[,] ReadMap(out int playerPositionX, out int playerPositionY, out int allPoints,char player)
+        private static char[,] ReadMap(out int playerPositionX, out int playerPositionY, out int allPoints, char player)
         {
             char symbol = ' ';
             char point = '.';
-            
+
             playerPositionX = 1;
             playerPositionY = 1;
             allPoints = 0;
-   
+
             char[,] map =
             {
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
@@ -84,7 +84,7 @@ namespace Brave_new_world
                 {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
             };
-            
+
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
@@ -120,7 +120,7 @@ namespace Brave_new_world
             }
         }
 
-        private static void Move(char[,] map, ref int playerPositionX, ref int playerPositionY, int directionY, int directionX,char player)
+        private static void Move(char[,] map, ref int playerPositionX, ref int playerPositionY, int directionY, int directionX, char player)
         {
             char grid = '#';
 
@@ -128,22 +128,31 @@ namespace Brave_new_world
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
 
+                const ConsoleKey KeyMoveUp = ConsoleKey.UpArrow;
+                const ConsoleKey KeyMoveDown = ConsoleKey.DownArrow;
+                const ConsoleKey KeyMoveLeft = ConsoleKey.LeftArrow;
+                const ConsoleKey KeyMoveRight = ConsoleKey.RightArrow;
+
                 switch (key.Key)
                 {
-                    case ConsoleKey.UpArrow:
-                        directionX = -1; directionY = 0;
+                    case KeyMoveUp:
+                        directionX = -1;
+                        directionY = 0;
                         break;
 
-                    case ConsoleKey.DownArrow:
-                        directionX = 1; directionY = 0;
+                    case KeyMoveDown:
+                        directionX = 1;
+                        directionY = 0;
                         break;
 
-                    case ConsoleKey.LeftArrow:
-                        directionX = 0; directionY = -1;
+                    case KeyMoveLeft:
+                        directionX = 0;
+                        directionY = -1;
                         break;
 
-                    case ConsoleKey.RightArrow:
-                        directionX = 0; directionY = 1;
+                    case KeyMoveRight:
+                        directionX = 0;
+                        directionY = 1;
                         break;
                 }
 
@@ -163,7 +172,7 @@ namespace Brave_new_world
             }
         }
 
-        private static void collectingPoints(char[,] map, int playerPositionX, int playerPositionY, ref int collect)
+        private static void CollecPoint(char[,] map, int playerPositionX, int playerPositionY, ref int collect)
         {
             char point = '.';
             char whitespace = ' ';
